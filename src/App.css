@@ -1,38 +1,59 @@
 .App {
-  text-align: center;
+  background-color: #EFF1FB;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  width: 90%;
+  margin: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.card {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0.8rem;
+  background-color: white;
+  position: relative;
+  padding: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.transfer-card {
+  width: 100%;
+  margin: 10px auto;
+  overflow: auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  box-sizing: border-box;
+}
+
+.transfer-card__label {
   color: white;
+  position: absolute;
+  width: 30%;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-left: auto;
+  left: 0;
+  margin-right: auto;
+  right: 0;
+  padding: 2.5px 0;
+  border-radius: 0px 0px 0.6rem 0.6rem;
 }
 
-.App-link {
-  color: #61dafb;
+.ingreso {
+  background-color: #98F307;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.egreso {
+  background-color: #F90F4A;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.balance-card {
+}
+
+.balance-card__item {
+  display: flex;
 }
