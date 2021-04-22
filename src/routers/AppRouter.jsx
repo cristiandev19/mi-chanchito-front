@@ -4,6 +4,8 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import AuthPage from '../pages/AuthPage';
+import HomePage from '../pages/HomePage';
 
 const AppRouter = () => {
   console.log('router');
