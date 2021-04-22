@@ -1,11 +1,14 @@
 import { Button, makeStyles } from '@material-ui/core';
 import React from 'react';
+import LoginModal from '../components/LoginModal';
+import RegisterModal from '../components/RegisterModal';
 
 const useStyles = makeStyles(() => ({
   buttonContainer: {
     marginTop     : '60px',
     display       : 'flex',
     flexDirection : 'column',
+    alignItems    : 'center',
     '& > Button'  : {
       borderRadius : '5px',
       padding      : '10px 15px',
@@ -17,19 +20,22 @@ const useStyles = makeStyles(() => ({
       marginBottom: '10px',
     },
   },
-  blueButton: {
-    backgroundColor : '#2E598C',
+  loginButton: {
+    backgroundColor : '#E4445A',
     color           : 'white',
     '&:hover'       : {
-      backgroundColor: '#2E598C',
+      backgroundColor: '#E4445A',
     },
   },
-  whiteButton: {
-    backgroundColor : 'white',
-    color           : '#686868',
+  registerButton: {
+    backgroundColor : '#37699C',
+    color           : 'white',
     '&:hover'       : {
-      backgroundColor: '#EBE9E9',
+      backgroundColor: '#37699C',
     },
+  },
+  title: {
+    textAlign: 'center',
   },
 }));
 
@@ -47,28 +53,38 @@ const AuthPage = () => {
     setOpenRegister(true);
   };
 
+  const handleCloseLogin = () => {
+
+  };
+
+  const handleCloseRegister = () => {
+
+  };
+
   return (
-    <div className="main-container">
+    <div className="auth-container">
       <div
         className="part1"
-        style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/portada.png')` }}
+        style={{ backgroundImage: `url('${process.env.PUBLIC_URL}/images/portada.png')` }}
       />
       <div className="part2">
         <div className="part2-content">
-          <h1>Crea y construye proyectos con gente como tú</h1>
+          <h1 className={classes.title}>Administra tu dinero de forma efectiva</h1>
           <div className={classes.buttonContainer}>
-            <Button variant="contained" color="primary" onClick={handleLogin} className={classes.blueButton}>
+            <Button variant="contained" color="primary" onClick={handleLogin} className={classes.loginButton}>
               Iniciar Sesión
             </Button>
-            <Button variant="contained" color="secondary" onClick={handleRegister} className={classes.whiteButton}>
+            <Button variant="contained" color="secondary" onClick={handleRegister} className={classes.registerButton}>
               Registrarse
             </Button>
           </div>
         </div>
       </div>
 
-      {/* <Login open={openLogin} onClose={handleCloseLogin} />
-      <Register open={openRegister} onClose={handleCloseRegister} /> */}
+      <LoginModal open={openLogin} onClose={handleCloseLogin} />
+      <RegisterModal open={openRegister} onClose={handleCloseRegister} />
+      {/*
+      */}
     </div>
   );
 };
