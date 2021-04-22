@@ -57,3 +57,28 @@
 .balance-card__item {
   display: flex;
 }
+
+.auth-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(345px, 1fr));
+  height: 100vh;
+}
+.auth-container .part1{
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.auth-container  .part2 {
+  display: flex;
+  align-items: center;
+  background-color: #EFF1FB;
+}
+.part2 h1{
+  color: #383838;
+}
+
+.part2-content{
+  box-sizing: border-box;
+  margin: auto;
+}
