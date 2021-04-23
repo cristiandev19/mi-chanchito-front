@@ -3,7 +3,7 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,9 +57,10 @@ const useStyles = makeStyles((theme) => ({
 const LoginModal = ({ onClose, open }) => {
   const classes = useStyles();
   console.log('login modal');
-  const { register, handleSubmit, formState: { errors } } = useForm();
-
-  console.log('errors', errors);
+  const {
+    control, register, handleSubmit, errors: fieldsErrors,
+  } = useForm();
+  console.log('fieldsErrors', fieldsErrors);
 
   const handleClose = () => {
     onClose({ hola: '12' });
@@ -93,14 +94,29 @@ const LoginModal = ({ onClose, open }) => {
           autoComplete="off"
           onSubmit={handleSubmit(onSubmit)}
         >
-
-          <TextField
-            inputRef={register('email')}
-            id="email"
+          <Controller
             name="email"
-            label="Correo electronico"
-            variant="outlined"
+            render={({ field }) => (
+              <TextField
+                id="email"
+                name="email"
+                label="Correo electronico"
+                variant="outlined"
+                helperText={fieldsErrors?.email ? fieldsErrors?.email.message : null}
+                error={fieldsErrors?.email}
+              />
+            )}
+            control={control}
+            defaultValue=""
+            rules={{
+              required : 'Required',
+              pattern  : {
+                value   : /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message : 'invalid email address',
+              },
+            }}
           />
+
           <TextField
             inputRef={register('password')}
             id="password"
