@@ -53,12 +53,14 @@ const AuthPage = () => {
     setOpenRegister(true);
   };
 
-  const handleCloseLogin = () => {
-
+  const handleCloseLogin = (hola) => {
+    console.log('hola', hola);
+    setOpenLogin(false);
   };
 
-  const handleCloseRegister = () => {
-
+  const handleCloseRegister = (hola) => {
+    console.log('hola', hola);
+    setOpenRegister(false);
   };
 
   return (
