@@ -3,6 +3,7 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
 const LoginModal = ({ onClose, open }) => {
   const classes = useStyles();
   console.log('login modal');
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  console.log('errors', errors);
 
   const handleClose = () => {
     onClose({ hola: '12' });
@@ -65,6 +69,10 @@ const LoginModal = ({ onClose, open }) => {
   };
 
   const handle = () => {
+  };
+
+  const onSubmit = (data) => {
+    console.log('hola', data);
   };
 
   return (
@@ -79,37 +87,54 @@ const LoginModal = ({ onClose, open }) => {
         Iniciar Sesión
       </DialogTitle>
       <DialogContent>
-        <form className={classes.root} noValidate autoComplete="off">
+        <form
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit(onSubmit)}
+        >
 
-          <TextField id="filled-basic" label="Correo electronico" variant="outlined" />
-          <TextField id="filled-basic" label="Contraseña" variant="outlined" />
+          <TextField
+            inputRef={register('email')}
+            id="email"
+            name="email"
+            label="Correo electronico"
+            variant="outlined"
+          />
+          <TextField
+            inputRef={register('password')}
+            id="password"
+            name="password"
+            label="Contraseña"
+            variant="outlined"
+          />
+          <div className={classes.loginButtonContainer}>
+            <Button variant="contained" color="secondary" onClick={handleLogin} className={classes.blueButton} type="submit">
+              Iniciar Sesión
+            </Button>
+
+            <span>ó</span>
+
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handle}
+              className={classes.whiteButton}
+            >
+              Iniciar Sesión con Google
+            </Button>
+
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handle}
+              className={classes.whiteButton}
+            >
+              Iniciar Sesión con Facebook
+            </Button>
+          </div>
         </form>
 
-        <div className={classes.loginButtonContainer}>
-          <Button variant="contained" color="secondary" onClick={handleLogin} className={classes.blueButton}>
-            Iniciar Sesión
-          </Button>
-
-          <span>ó</span>
-
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handle}
-            className={classes.whiteButton}
-          >
-            Iniciar Sesión con Google
-          </Button>
-
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handle}
-            className={classes.whiteButton}
-          >
-            Iniciar Sesión con Facebook
-          </Button>
-        </div>
       </DialogContent>
     </Dialog>
   );
