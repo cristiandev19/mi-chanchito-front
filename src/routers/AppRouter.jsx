@@ -5,6 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 import AuthPage from '../pages/AuthPage';
+import DashboardPage from '../pages/DashboardPage';
 import HomePage from '../pages/HomePage';
 
 const AppRouter = () => {
@@ -18,6 +19,9 @@ const AppRouter = () => {
           <Switch>
             <Route path="/auth">
               <AuthPage />
+            </Route>
+            <Route path="/dashboard">
+              <DashboardPage />
             </Route>
             <Route path="/">
               <HomePage />
