@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Dialog, DialogContent, DialogTitle, makeStyles, TextField,
 } from '@material-ui/core';
+import { Controller, useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,17 +34,24 @@ const useStyles = makeStyles((theme) => ({
 
 const RegisterModal = ({ onClose, open }) => {
   const classes = useStyles();
+  const {
+    control, handleSubmit, errors: fieldsErrors,
+  } = useForm();
 
   const handleClose = () => {
     onClose({ hola: '12' });
   };
 
-  const handleRegister = () => {
-    // setOpenLogin(true);
-  };
+  // const handleRegister = () => {
+  //   // setOpenLogin(true);
+  // };
 
   const handle = () => {
 
+  };
+
+  const onSubmit = (data) => {
+    console.log('hola', data);
   };
 
   return (
@@ -54,15 +62,100 @@ const RegisterModal = ({ onClose, open }) => {
       </DialogTitle>
 
       <DialogContent>
-        <form className={classes.root} noValidate autoComplete="off">
+        <form
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit(onSubmit)}
+        >
 
-          <TextField id="names" label="Nombre completo" variant="outlined" />
-          <TextField id="email" label="Email" variant="outlined" />
-          <TextField id="password" label="Contraseña" variant="outlined" />
-          <TextField id="password-2" label="Repetir contraseña" variant="outlined" />
+          <Controller
+            name="names"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="names"
+                name="names"
+                label="Nombre completo"
+                variant="outlined"
+                helperText={fieldsErrors?.names ? fieldsErrors?.names.message : null}
+                error={fieldsErrors?.names}
+              />
+            )}
+            control={control}
+            defaultValue=""
+            rules={{
+              required: 'Required',
+            }}
+          />
+          <Controller
+            name="email"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="email"
+                name="email"
+                label="Email"
+                variant="outlined"
+                helperText={fieldsErrors?.email ? fieldsErrors?.email.message : null}
+                error={fieldsErrors?.email}
+              />
+            )}
+            control={control}
+            defaultValue=""
+            rules={{
+              required : 'Required',
+              pattern  : {
+                value   : /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message : 'invalid email address',
+              },
+            }}
+          />
+          <Controller
+            name="password"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="password"
+                name="password"
+                label="Contraseña"
+                variant="outlined"
+                helperText={fieldsErrors?.password ? fieldsErrors?.password.message : null}
+                error={fieldsErrors?.password}
+              />
+            )}
+            control={control}
+            defaultValue=""
+            rules={{
+              required: 'Required',
+            }}
+          />
+          <Controller
+            name="password2"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="password2"
+                name="password2"
+                label="Repetir contraseña"
+                variant="outlined"
+                helperText={fieldsErrors?.password2 ? fieldsErrors?.password2.message : null}
+                error={fieldsErrors?.password2}
+              />
+            )}
+            control={control}
+            defaultValue=""
+            rules={{
+              required: 'Required',
+            }}
+          />
 
           <div className={classes.registerButtonContainer}>
-            <Button variant="contained" color="secondary" onClick={handleRegister}>
+            <Button
+              variant="contained"
+              color="secondary"
+              type="submit"
+            >
               Registrate
             </Button>
 
