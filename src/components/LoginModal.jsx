@@ -1,9 +1,12 @@
 import {
   Button, Dialog, DialogContent, DialogTitle, makeStyles, TextField,
 } from '@material-ui/core';
-import React from 'react';
+import { useHistory } from 'react-router';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useForm, Controller } from 'react-hook-form';
+import AuthService from '../services/auth.service';
+import AuthContext from '../contexts/auth.context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,24 +59,38 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginModal = ({ onClose, open }) => {
   const classes = useStyles();
+
+  const { dispatch } = useContext(AuthContext);
+  const authService = new AuthService();
+  const history = useHistory();
+
   console.log('login modal');
   const {
-    control, register, handleSubmit, errors: fieldsErrors,
+    control, handleSubmit, formState: { errors },
   } = useForm();
-  console.log('fieldsErrors', fieldsErrors);
+  console.log('errors', errors);
 
   const handleClose = () => {
     onClose({ hola: '12' });
-  };
-  const handleLogin = () => {
-    // setOpenLogin(true);
   };
 
   const handle = () => {
   };
 
+  const handleLogin = async ({ email, password }) => {
+    if (!email) return;
+    if (!password) return;
+    const { error, payload: loginPayload } = await authService.loginEmail({ email, password });
+    if (error) return;
+    console.log('response', loginPayload);
+    console.log('dispatch', dispatch);
+    authService.setLocalStorage(loginPayload);
+    history.push('/dashboard');
+  };
+
   const onSubmit = (data) => {
     console.log('hola', data);
+    handleLogin(data);
   };
 
   return (
@@ -98,12 +115,13 @@ const LoginModal = ({ onClose, open }) => {
             name="email"
             render={({ field }) => (
               <TextField
+                {...field}
                 id="email"
                 name="email"
                 label="Correo electronico"
                 variant="outlined"
-                helperText={fieldsErrors?.email ? fieldsErrors?.email.message : null}
-                error={fieldsErrors?.email}
+                helperText={errors.email ? errors.email.message : null}
+                error={errors.email}
               />
             )}
             control={control}
@@ -116,16 +134,33 @@ const LoginModal = ({ onClose, open }) => {
               },
             }}
           />
-
-          <TextField
-            inputRef={register('password')}
-            id="password"
+          <Controller
             name="password"
-            label="Contraseña"
-            variant="outlined"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="password"
+                name="password"
+                label="Contraseña"
+                variant="outlined"
+                helperText={errors.password ? errors.password.message : null}
+                error={errors.password}
+              />
+            )}
+            control={control}
+            defaultValue=""
+            rules={{
+              required: 'Required',
+            }}
           />
           <div className={classes.loginButtonContainer}>
-            <Button variant="contained" color="secondary" onClick={handleLogin} className={classes.blueButton} type="submit">
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.blueButton}
+              type="submit"
+              disabled={Object.keys(errors).length > 0}
+            >
               Iniciar Sesión
             </Button>
 
