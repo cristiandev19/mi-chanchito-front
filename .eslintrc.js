@@ -26,5 +26,9 @@ module.exports = {
         on          : 'colon',
       },
     }],
+    'jsx-props-no-spreading'       : 'off',
+    'react/jsx-props-no-spreading' : 'off',
+    'no-async-promise-executor'    : 'off',
+    'class-methods-use-this'       : 'off',
   },
 };
