@@ -1,16 +1,18 @@
+import { useReducer } from 'react';
 import './App.css';
+import AuthContext from './contexts/auth.context';
+import authReducer from './reducers/auth.reducer';
 import AppRouter from './routers/AppRouter';
 
+const init = () => JSON.parse(localStorage.getItem('user')) || { logged: false };
+
 function App() {
-  console.log('app');
+  const [user, dispatch] = useReducer(authReducer, {}, init);
 
   return (
-    // <div className='App">
-    //   <h1>
-    //     prieba
-    //   </h1>
-    // </div>
-    <AppRouter />
+    <AuthContext.Provider value={{ user, dispatch }}>
+      <AppRouter />
+    </AuthContext.Provider>
   );
 }
 
