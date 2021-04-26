@@ -1,10 +1,11 @@
 import { Button, makeStyles } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BalanceCard from '../components/BalanceCard';
 import TransferCard from '../components/TransferCard';
-import TransferDialog from '../components/TransferDialog';
+import TransferModal from '../components/TransferModal';
 import { actionsTransfer, eventsTransferCard, eventsTransferDialog } from '../constant/transfer';
 import '../App.css';
+import TransferService from '../services/transfer.service';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashboardPage = () => {
+  const transferService = new TransferService();
   console.log('Router');
   const classes = useStyles();
   const [openTransferDialog, setOpenTransferDialog] = useState(false);
@@ -54,6 +56,11 @@ const DashboardPage = () => {
     },
   ];
 
+  useEffect(async () => {
+    const response = await transferService.getAllTransfers();
+    console.log('response', response);
+  }, []);
+
   const handleAddTransfer = () => {
     console.log('hey');
     setActionTransfer(actionsTransfer.create);
@@ -62,9 +69,11 @@ const DashboardPage = () => {
 
   const handleTransferDialogEvent = ({ type, payload }) => {
     console.log('payload', payload);
+    console.log('type', type);
     switch (type) {
       case eventsTransferDialog.close:
         setOpenTransferDialog(false);
+        // openTransferDialog, setOpenTransferDialog
         break;
       case eventsTransferDialog.create:
         console.log('creando');
@@ -118,7 +127,7 @@ const DashboardPage = () => {
           ))
         }
       </div>
-      <TransferDialog
+      <TransferModal
         open={openTransferDialog}
         actionTransfer={actionTransfer}
         transferDialogEvent={handleTransferDialogEvent}
