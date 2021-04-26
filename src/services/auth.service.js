@@ -1,4 +1,4 @@
-const BACK_URL = 'http://localhost:8089';
+import config from '../config';
 
 class AuthService {
   constructor() {
@@ -13,7 +13,7 @@ class AuthService {
         const bodyObject = {
           email, password,
         };
-        const response = await fetch(`${BACK_URL}/${this.path}/login-email`, {
+        const response = await fetch(`${config.backendUrl}/${this.path}/login-email`, {
           method  : 'POST',
           headers : {
             'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ class AuthService {
         const bodyObject = {
           email, password,
         };
-        const response = await fetch(`${BACK_URL}/${this.path}/signup-email`, {
+        const response = await fetch(`${config.backendUrl}/${this.path}/signup-email`, {
           method  : 'POST',
           headers : {
             'Content-Type': 'application/json',
