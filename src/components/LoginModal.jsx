@@ -64,14 +64,12 @@ const LoginModal = ({ onClose, open }) => {
   const authService = new AuthService();
   const history = useHistory();
 
-  console.log('login modal');
   const {
     control, handleSubmit, formState: { errors },
   } = useForm();
-  console.log('errors', errors);
 
   const handleClose = () => {
-    onClose({ hola: '12' });
+    onClose({});
   };
 
   const handle = () => {
