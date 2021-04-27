@@ -1,6 +1,6 @@
 import {
   Button, Dialog, DialogActions, DialogContent,
-  DialogTitle, makeStyles, TextField, useMediaQuery, useTheme,
+  DialogTitle, makeStyles, Select, TextField, useMediaQuery, useTheme,
 } from '@material-ui/core';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -15,6 +15,15 @@ const useStyles = makeStyles((theme) => ({
   },
   createBtn : {},
   updateBtn : {},
+  form      : {
+    '& > *': {
+      margin : theme.spacing(1),
+      width  : '300px',
+    },
+    display       : 'flex',
+    flexDirection : 'column',
+    alignItems    : 'center',
+  },
 }));
 
 const TransferDialog = ({
@@ -28,7 +37,7 @@ const TransferDialog = ({
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const {
-    control, handleSubmit, formState: { errors },
+    control, formState: { errors }, getValues,
   } = useForm();
 
   const handleClose = () => {
@@ -53,7 +62,7 @@ const TransferDialog = ({
   //   });
   // };
 
-  const test = (data) => {
+  const handleSubmit = (data) => {
     console.log('data', data);
   };
 
@@ -61,7 +70,12 @@ const TransferDialog = ({
   switch (actionTransfer) {
     case actionsTransfer.create:
       actionSelected = (
-        <Button onClick={() => handleSubmit(test)} color="primary" autoFocus className={classes.createBtn}>
+        <Button
+          onClick={() => handleSubmit(getValues())}
+          color="primary"
+          autoFocus
+          className={classes.createBtn}
+        >
           Crear
         </Button>
       );
@@ -69,7 +83,12 @@ const TransferDialog = ({
 
     case actionsTransfer.update:
       actionSelected = (
-        <Button onClick={() => handleSubmit(test)} color="primary" autoFocus className={classes.updateBtn}>
+        <Button
+          onClick={() => handleSubmit(getValues())}
+          color="primary"
+          autoFocus
+          className={classes.updateBtn}
+        >
           Actualizar
         </Button>
       );
@@ -92,7 +111,7 @@ const TransferDialog = ({
         </DialogTitle>
         <DialogContent>
           <form
-            className={classes.root}
+            className={classes.form}
             noValidate
             autoComplete="off"
           >
@@ -103,10 +122,98 @@ const TransferDialog = ({
                   {...field}
                   id="description"
                   name="description"
-                  label="Correo electronico"
+                  label="Descripcion"
                   variant="outlined"
                   helperText={errors.description ? errors.description.message : null}
                   error={errors.description}
+                />
+              )}
+              control={control}
+              defaultValue=""
+              rules={{
+                required: 'Required',
+              }}
+            />
+
+            <Controller
+              name="details"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="details"
+                  name="details"
+                  label="Detalles"
+                  variant="outlined"
+                  helperText={errors.details ? errors.details.message : null}
+                  error={errors.details}
+                />
+              )}
+              control={control}
+              defaultValue=""
+              rules={{
+                required: 'Required',
+              }}
+            />
+
+            <Controller
+              name="amount"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="amount"
+                  type="number"
+                  name="amount"
+                  label="Monto"
+                  variant="outlined"
+                  helperText={errors.amount ? errors.amount.message : null}
+                  error={errors.amount}
+                />
+              )}
+              control={control}
+              defaultValue=""
+              rules={{
+                required: 'Required',
+              }}
+            />
+
+            <Controller
+              name="dateTransfer"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="dateTransfer"
+                  name="dateTransfer"
+                  type="date"
+                  defaultValue="05-24-2017"
+                  label="Fecha transferencia"
+                  variant="outlined"
+                  helperText={errors.dateTransfer ? errors.dateTransfer.message : null}
+                  error={errors.dateTransfer}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              )}
+              control={control}
+              defaultValue=""
+              rules={{
+                required: 'Required',
+              }}
+            />
+
+            <Controller
+              name="cashFlow"
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  id="cashFlow"
+                  name="cashFlow"
+                  variant="outlined"
+                  options={[
+                    { value: 'chocolate', label: 'Chocolate' },
+                    { value: 'strawberry', label: 'Strawbrry' },
+                    { value: 'vanilla', label: 'Vanilla' },
+                  ]}
                 />
               )}
               control={control}
