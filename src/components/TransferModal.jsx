@@ -1,6 +1,6 @@
 import {
   Button, Dialog, DialogActions, DialogContent,
-  DialogTitle, makeStyles, Select, TextField, useMediaQuery, useTheme,
+  DialogTitle, makeStyles, MenuItem, Select, TextField, useMediaQuery, useTheme,
 } from '@material-ui/core';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
   updateBtn : {},
   form      : {
     '& > *': {
-      margin : theme.spacing(1),
-      width  : '300px',
+      margin   : theme.spacing(1),
+      minWidth : '300px',
     },
     display       : 'flex',
     flexDirection : 'column',
@@ -144,6 +144,8 @@ const TransferDialog = ({
                   name="details"
                   label="Detalles"
                   variant="outlined"
+                  multiline
+                  rows={4}
                   helperText={errors.details ? errors.details.message : null}
                   error={errors.details}
                 />
@@ -184,7 +186,6 @@ const TransferDialog = ({
                   id="dateTransfer"
                   name="dateTransfer"
                   type="date"
-                  defaultValue="05-24-2017"
                   label="Fecha transferencia"
                   variant="outlined"
                   helperText={errors.dateTransfer ? errors.dateTransfer.message : null}
@@ -209,12 +210,10 @@ const TransferDialog = ({
                   id="cashFlow"
                   name="cashFlow"
                   variant="outlined"
-                  options={[
-                    { value: 'chocolate', label: 'Chocolate' },
-                    { value: 'strawberry', label: 'Strawbrry' },
-                    { value: 'vanilla', label: 'Vanilla' },
-                  ]}
-                />
+                >
+                  <MenuItem value="ingreso">Ingreso</MenuItem>
+                  <MenuItem value="egreso">Egreso</MenuItem>
+                </Select>
               )}
               control={control}
               defaultValue=""
