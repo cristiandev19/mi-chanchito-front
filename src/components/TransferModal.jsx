@@ -6,6 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Controller, useForm } from 'react-hook-form';
 import { actionsTransfer, eventsTransferDialog } from '../constant/transfer';
+import TransferService from '../services/transfer.service';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,7 @@ const TransferDialog = ({
 }) => {
   const classes = useStyles();
 
+  const transferService = new TransferService();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -62,8 +64,10 @@ const TransferDialog = ({
   //   });
   // };
 
-  const handleSubmit = (data) => {
+  const handleSubmit = async (data) => {
     console.log('data', data);
+    const res = await transferService.createTransfer(data);
+    console.log('res', res);
   };
 
   let actionSelected;
