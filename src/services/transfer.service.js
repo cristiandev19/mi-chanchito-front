@@ -19,9 +19,9 @@ class TransferService {
             Authorization: token,
           },
         });
-        const data = await response.json();
-        console.log('data ', data);
-        return resolve({ success: true, payload: data });
+        const { response: apiResponse } = await response.json();
+        console.log('data ', apiResponse);
+        return resolve({ success: true, payload: apiResponse });
       } catch (error) {
         return resolve({ error });
       }
@@ -49,7 +49,7 @@ class TransferService {
           cashFlow,
         };
 
-        const response = await fetch(`${config.backendUrl}/${this.path}/all`, {
+        const response = await fetch(`${config.backendUrl}/${this.path}/create`, {
           method  : 'POST',
           headers : {
             'Content-Type' : 'application/json',
