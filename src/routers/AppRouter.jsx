@@ -1,31 +1,39 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
 } from 'react-router-dom';
+import AuthContext from '../contexts/auth.context';
 import AuthPage from '../pages/AuthPage';
 import DashboardPage from '../pages/DashboardPage';
 import HomePage from '../pages/HomePage';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 const AppRouter = () => {
   console.log('router');
+  const { user } = useContext(AuthContext);
+  console.log('user', user);
   return (
     <>
       <Router>
         <div>
-          {/* A <Switch> looks through its children <Route>s and
-              renders the first one that matches the current URL. */}
           <Switch>
-            <Route path="/auth">
-              <AuthPage />
-            </Route>
-            <Route path="/dashboard">
-              <DashboardPage />
-            </Route>
-            <Route path="/">
-              <HomePage />
-            </Route>
+            <PublicRoute
+              path="/auth"
+              isAuthenticated={!!user.token}
+              component={AuthPage}
+            />
+            <PrivateRoute
+              path="/dashboard"
+              isAuthenticated={!!user.token}
+              component={DashboardPage}
+            />
+            <PublicRoute
+              path="/"
+              isAuthenticated={!!user.token}
+              component={HomePage}
+            />
           </Switch>
         </div>
       </Router>
