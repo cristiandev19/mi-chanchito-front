@@ -7,10 +7,10 @@ const BalanceCard = ({
 }) => {
   const formatData = (transfers) => {
     const ingresos = transfers
-      .filter((transfer) => transfer.casflow === cashFlowLabels.ingreso)
+      .filter((transfer) => transfer.cashFlow === cashFlowLabels.ingreso)
       .reduce((acc, curr) => acc + curr.amount, 0);
     const egresos = transfers
-      .filter((transfer) => transfer.casflow === cashFlowLabels.egreso)
+      .filter((transfer) => transfer.cashFlow === cashFlowLabels.egreso)
       .reduce((acc, curr) => acc + curr.amount, 0);
     return [
       {
@@ -63,8 +63,8 @@ const BalanceCard = ({
 
 BalanceCard.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
-    casflow : PropTypes.string.isRequired,
-    amount  : PropTypes.number.isRequired,
+    cashFlow : PropTypes.string.isRequired,
+    amount   : PropTypes.number.isRequired,
   })).isRequired,
 };
 
