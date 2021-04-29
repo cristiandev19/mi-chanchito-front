@@ -21,44 +21,15 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardPage = () => {
   const transferService = new TransferService();
-  console.log('Router');
   const classes = useStyles();
   const [openTransferDialog, setOpenTransferDialog] = useState(false);
   const [actionTransfer, setActionTransfer] = useState(actionsTransfer.create);
-  const data = [
-    {
-      title       : 'ingreso 1',
-      description : 'descripcion ingreso 1',
-      amount      : 450,
-      date        : Date.now(),
-      casflow     : 'ingreso',
-    },
-    {
-      title       : 'egreso 1',
-      description : 'descripcion egreso 1',
-      amount      : 200,
-      date        : Date.now(),
-      casflow     : 'egreso',
-    },
-    {
-      title       : 'ingreso 2',
-      description : 'descripcion ingreso 1',
-      amount      : 500,
-      date        : Date.now(),
-      casflow     : 'ingreso',
-    },
-    {
-      title       : 'egreso 2',
-      description : 'descripcion egreso 1',
-      amount      : 500,
-      date        : Date.now(),
-      casflow     : 'egreso',
-    },
-  ];
+  const [dataTransfers, setDataTransfer] = useState([]);
 
   useEffect(async () => {
-    const response = await transferService.getAllTransfers();
-    console.log('response', response);
+    const { payload } = await transferService.getAllTransfers();
+    console.log('response', payload);
+    setDataTransfer(payload);
   }, []);
 
   const handleAddTransfer = () => {
@@ -99,12 +70,10 @@ const DashboardPage = () => {
 
   return (
     <div>
-      <h1>hey dashboard</h1>
-
       <div className="container">
-        <h1>hola</h1>
+        <h1>Balance</h1>
 
-        <BalanceCard data={data} />
+        <BalanceCard data={dataTransfers} />
 
         <Button
           variant="contained"
@@ -116,12 +85,13 @@ const DashboardPage = () => {
         </Button>
         {/* cards */}
         {
-          data.map((transfer) => (
+          dataTransfers.map((transfer) => (
             <TransferCard
-              title={transfer.title}
+              description={transfer.description}
               amount={transfer.amount}
-              casflow={transfer.casflow}
-              key={transfer.title}
+              cashFlow={transfer.cashFlow}
+              // eslint-disable-next-line no-underscore-dangle
+              key={transfer._id}
               transferCardEvent={handleTransferCardEvent}
             />
           ))
