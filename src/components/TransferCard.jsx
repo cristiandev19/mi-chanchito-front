@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import { cashFlowLabels, eventsTransferCard } from '../constant/transfer';
 
 const TransferCard = ({
-  title,
+  description,
   amount,
-  casflow,
+  cashFlow,
   transferCardEvent,
 }) => {
+  console.log({
+    description, amount, cashFlow, transferCardEvent,
+  });
+
   let labelCard;
   let amountCard;
-  switch (casflow) {
+  switch (cashFlow) {
     case cashFlowLabels.ingreso:
       labelCard = <div className={`transfer-card__label ${cashFlowLabels.ingreso}`}>Ingreso</div>;
       amountCard = <div>{`+ S/. ${amount}`}</div>;
@@ -45,7 +49,7 @@ const TransferCard = ({
       tabIndex="0"
     >
       <div>
-        {title}
+        {description}
       </div>
       <span className="spacer" />
       {
@@ -58,9 +62,9 @@ const TransferCard = ({
   );
 };
 TransferCard.propTypes = {
-  title             : PropTypes.string.isRequired,
+  description       : PropTypes.string.isRequired,
   amount            : PropTypes.number.isRequired,
-  casflow           : PropTypes.string.isRequired,
+  cashFlow          : PropTypes.string.isRequired,
   transferCardEvent : PropTypes.func.isRequired,
 };
 
