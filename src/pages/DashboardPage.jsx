@@ -24,6 +24,7 @@ const DashboardPage = () => {
   const classes = useStyles();
   const [openTransferDialog, setOpenTransferDialog] = useState(false);
   const [actionTransfer, setActionTransfer] = useState(actionsTransfer.create);
+  const [transferDataDialog, setTransferDataDialog] = useState({});
   const [dataTransfers, setDataTransfer] = useState([]);
 
   useEffect(async () => {
@@ -36,6 +37,15 @@ const DashboardPage = () => {
     console.log('hey');
     setActionTransfer(actionsTransfer.create);
     setOpenTransferDialog(true);
+    setTransferDataDialog({});
+  };
+
+  const handleCreateAction = async (data) => {
+    const { err, payload } = await transferService.createTransfer(data);
+    console.log('err', err);
+    console.log('res', payload);
+    setOpenTransferDialog(false);
+    setDataTransfer([payload.response, ...dataTransfers]);
   };
 
   const handleTransferDialogEvent = ({ type, payload }) => {
@@ -48,6 +58,7 @@ const DashboardPage = () => {
         break;
       case eventsTransferDialog.create:
         console.log('creando');
+        handleCreateAction(payload);
         break;
       case eventsTransferDialog.update:
         console.log('actualizando');
@@ -62,6 +73,9 @@ const DashboardPage = () => {
     switch (type) {
       case eventsTransferCard.update:
         console.log('actualizando');
+        setActionTransfer(actionsTransfer.update);
+        setOpenTransferDialog(true);
+        setTransferDataDialog(payload);
         break;
       default:
         break;
@@ -87,11 +101,9 @@ const DashboardPage = () => {
         {
           dataTransfers.map((transfer) => (
             <TransferCard
-              description={transfer.description}
-              amount={transfer.amount}
-              cashFlow={transfer.cashFlow}
               // eslint-disable-next-line no-underscore-dangle
               key={transfer._id}
+              transfer={transfer}
               transferCardEvent={handleTransferCardEvent}
             />
           ))
@@ -101,6 +113,7 @@ const DashboardPage = () => {
         open={openTransferDialog}
         actionTransfer={actionTransfer}
         transferDialogEvent={handleTransferDialogEvent}
+        transferData={transferDataDialog}
       />
     </div>
   );
