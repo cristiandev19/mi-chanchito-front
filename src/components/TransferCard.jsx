@@ -3,25 +3,19 @@ import PropTypes from 'prop-types';
 import { cashFlowLabels, eventsTransferCard } from '../constant/transfer';
 
 const TransferCard = ({
-  description,
-  amount,
-  cashFlow,
+  transfer,
   transferCardEvent,
 }) => {
-  console.log({
-    description, amount, cashFlow, transferCardEvent,
-  });
-
   let labelCard;
   let amountCard;
-  switch (cashFlow) {
+  switch (transfer.cashFlow) {
     case cashFlowLabels.ingreso:
       labelCard = <div className={`transfer-card__label ${cashFlowLabels.ingreso}`}>Ingreso</div>;
-      amountCard = <div>{`+ S/. ${amount}`}</div>;
+      amountCard = <div>{`+ S/. ${transfer.amount}`}</div>;
       break;
     case cashFlowLabels.egreso:
       labelCard = <div className={`transfer-card__label ${cashFlowLabels.egreso}`}>Egreso</div>;
-      amountCard = <div>{`- S/. ${amount}`}</div>;
+      amountCard = <div>{`- S/. ${transfer.amount}`}</div>;
       break;
 
     default:
@@ -30,7 +24,8 @@ const TransferCard = ({
 
   const emitUpdate = () => {
     transferCardEvent({
-      type: eventsTransferCard.update,
+      type    : eventsTransferCard.update,
+      payload : transfer,
     });
   };
 
@@ -49,7 +44,7 @@ const TransferCard = ({
       tabIndex="0"
     >
       <div>
-        {description}
+        {transfer.description}
       </div>
       <span className="spacer" />
       {
@@ -62,10 +57,14 @@ const TransferCard = ({
   );
 };
 TransferCard.propTypes = {
-  description       : PropTypes.string.isRequired,
-  amount            : PropTypes.number.isRequired,
-  cashFlow          : PropTypes.string.isRequired,
-  transferCardEvent : PropTypes.func.isRequired,
+  transfer: PropTypes.shape({
+    description  : PropTypes.string.isRequired,
+    details      : PropTypes.string.isRequired,
+    amount       : PropTypes.number.isRequired,
+    dateTransfer : PropTypes.string.isRequired,
+    cashFlow     : PropTypes.string.isRequired,
+  }).isRequired,
+  transferCardEvent: PropTypes.func.isRequired,
 };
 
 export default TransferCard;
