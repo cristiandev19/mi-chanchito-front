@@ -2,11 +2,11 @@ import {
   Button, Dialog, DialogActions, DialogContent,
   DialogTitle, makeStyles, MenuItem, Select, TextField, useMediaQuery, useTheme,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Controller, useForm } from 'react-hook-form';
 import { actionsTransfer, eventsTransferDialog } from '../constant/transfer';
-import TransferService from '../services/transfer.service';
+import { formatInputDate } from '../lib/date';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   createBtn : {},
   updateBtn : {},
+  deleteBtn : {},
   form      : {
     '& > *': {
       margin   : theme.spacing(1),
@@ -31,16 +32,32 @@ const TransferDialog = ({
   open,
   actionTransfer,
   transferDialogEvent,
+  transferData,
 }) => {
+  console.log('transferData', transferData);
   const classes = useStyles();
 
-  const transferService = new TransferService();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const {
-    control, formState: { errors }, getValues,
+    control, formState: { errors }, getValues, setValue,
   } = useForm();
+
+  useEffect(() => {
+    console.log('initiiii', transferData);
+    if (open) {
+      console.log('abriendo');
+      setValue('description', transferData.description);
+      setValue('details', transferData.details);
+      setValue('amount', transferData.amount);
+      setValue('dateTransfer', formatInputDate(transferData.dateTransfer));
+      setValue('cashFlow', transferData.cashFlow);
+    }
+    // return () => {
+    //   cleanup
+    // };
+  }, [open]);
 
   const handleClose = () => {
     // setOpen(false);
@@ -50,51 +67,73 @@ const TransferDialog = ({
     });
   };
 
-  // const handleCreate = () => {
-  //   transferDialogEvent({
-  //     type    : eventsTransferDialog.create,
-  //     payload : {},
-  //   });
-  // };
+  const handleCreate = (data) => {
+    transferDialogEvent({
+      type    : eventsTransferDialog.create,
+      payload : data,
+    });
+  };
 
-  // const handleUpdate = () => {
-  //   transferDialogEvent({
-  //     type    : eventsTransferDialog.update,
-  //     payload : {},
-  //   });
-  // };
+  const handleUpdate = (data) => {
+    transferDialogEvent({
+      type    : eventsTransferDialog.update,
+      payload : data,
+    });
+  };
 
   const handleSubmit = async (data) => {
     console.log('data', data);
-    const res = await transferService.createTransfer(data);
-    console.log('res', res);
+    switch (actionTransfer) {
+      case actionsTransfer.create:
+        handleCreate(data);
+        break;
+
+      case actionsTransfer.update:
+        handleUpdate(data);
+        break;
+
+      default:
+        break;
+    }
   };
 
   let actionSelected;
   switch (actionTransfer) {
     case actionsTransfer.create:
       actionSelected = (
-        <Button
-          onClick={() => handleSubmit(getValues())}
-          color="primary"
-          autoFocus
-          className={classes.createBtn}
-        >
-          Crear
-        </Button>
+        <>
+          <Button
+            onClick={() => handleSubmit(getValues())}
+            color="primary"
+            autoFocus
+            className={classes.createBtn}
+          >
+            Crear
+          </Button>
+        </>
       );
       break;
 
     case actionsTransfer.update:
       actionSelected = (
-        <Button
-          onClick={() => handleSubmit(getValues())}
-          color="primary"
-          autoFocus
-          className={classes.updateBtn}
-        >
-          Actualizar
-        </Button>
+        <>
+          <Button
+            onClick={() => handleSubmit(getValues())}
+            color="primary"
+            autoFocus
+            className={classes.deleteBtn}
+          >
+            Eliminar
+          </Button>
+          <Button
+            onClick={() => handleSubmit(getValues())}
+            color="primary"
+            autoFocus
+            className={classes.updateBtn}
+          >
+            Actualizar
+          </Button>
+        </>
       );
       break;
 
@@ -249,6 +288,14 @@ TransferDialog.propTypes = {
   open                : PropTypes.bool.isRequired,
   actionTransfer      : PropTypes.string.isRequired,
   transferDialogEvent : PropTypes.func.isRequired,
+  transferData        : PropTypes.shape({
+    description  : PropTypes.string,
+    details      : PropTypes.string,
+    amount       : PropTypes.number,
+    dateTransfer : PropTypes.string,
+    cashFlow     : PropTypes.string,
+    userId       : PropTypes.string,
+  }).isRequired,
 };
 
 export default TransferDialog;
