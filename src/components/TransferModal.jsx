@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   },
   createBtn : {},
   updateBtn : {},
-  deleteBtn : {},
   form      : {
     '& > *': {
       margin   : theme.spacing(1),
@@ -77,7 +76,8 @@ const TransferDialog = ({
   const handleUpdate = (data) => {
     transferDialogEvent({
       type    : eventsTransferDialog.update,
-      payload : data,
+      // eslint-disable-next-line no-underscore-dangle
+      payload : { ...data, _id: transferData._id },
     });
   };
 
@@ -117,14 +117,6 @@ const TransferDialog = ({
     case actionsTransfer.update:
       actionSelected = (
         <>
-          <Button
-            onClick={() => handleSubmit(getValues())}
-            color="primary"
-            autoFocus
-            className={classes.deleteBtn}
-          >
-            Eliminar
-          </Button>
           <Button
             onClick={() => handleSubmit(getValues())}
             color="primary"
@@ -265,11 +257,6 @@ const TransferDialog = ({
               }}
             />
           </form>
-
-          {/* <DialogContentText>
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
-          </DialogContentText> */}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
@@ -295,6 +282,7 @@ TransferDialog.propTypes = {
     dateTransfer : PropTypes.string,
     cashFlow     : PropTypes.string,
     userId       : PropTypes.string,
+    _id          : PropTypes.string,
   }).isRequired,
 };
 
