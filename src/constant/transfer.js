@@ -15,5 +15,6 @@ exports.eventsTransferDialog = {
 };
 
 exports.eventsTransferCard = {
-  update: '[eventsTransferCard] update',
+  update : '[eventsTransferCard] update',
+  delete : '[eventsTransferCard] delete',
 };
