@@ -1,5 +1,10 @@
-import { Button, makeStyles } from '@material-ui/core';
+import {
+  AppBar, Button, IconButton, List, ListItem, ListItemIcon,
+  ListItemText, makeStyles, Menu, MenuItem, SwipeableDrawer, Toolbar, Typography,
+} from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import BalanceCard from '../components/BalanceCard';
 import TransferCard from '../components/TransferCard/TransferCard';
 import TransferModal from '../components/TransferModal';
@@ -19,6 +24,18 @@ const useStyles = makeStyles((theme) => ({
     width  : '100%',
     margin : '20px 0',
   },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  fullList: {
+    width: '100vw',
+  },
+  list: {
+    width: 250,
+  },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
 const DashboardPage = () => {
@@ -30,6 +47,9 @@ const DashboardPage = () => {
   const [confirmModalData, setConfirmModalData] = useState({});
   const [transferDataDialog, setTransferDataDialog] = useState({});
   const [dataTransfers, setDataTransfer] = useState([]);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
 
   useEffect(async () => {
     const { payload } = await transferService.getAllTransfers();
@@ -131,9 +151,91 @@ const DashboardPage = () => {
     }
   };
 
+  const [drawer, setDrawer] = useState(false);
+
+  const toggleDrawer = (opened) => (event) => {
+    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setDrawer(opened);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div>
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" color="inherit" className={classes.title}>
+            Mi chanchito
+          </Typography>
+
+          <div>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical   : 'top',
+                horizontal : 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical   : 'top',
+                horizontal : 'right',
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+            </Menu>
+          </div>
+        </Toolbar>
+      </AppBar>
+      <SwipeableDrawer
+        anchor="left"
+        open={drawer}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+      >
+        <div className={classes.fullList}>
+          {/* {list('left')} */}
+          <List>
+            <ListItem button onClick={toggleDrawer(false)}>
+              <ListItemIcon>
+                <MenuIcon />
+              </ListItemIcon>
+              <ListItemText primary="Inicio" />
+            </ListItem>
+          </List>
+        </div>
+      </SwipeableDrawer>
       <div className="container">
+
         <h1>Balance</h1>
 
         <BalanceCard data={dataTransfers} />
