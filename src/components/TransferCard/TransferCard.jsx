@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Divider, makeStyles } from '@material-ui/core';
 import { cashFlowLabels, eventsTransferCard } from '../../constant/transfer';
@@ -28,16 +28,10 @@ const TransferCard = ({
 }) => {
   const classes = useStyles();
   // const [hovered, setHovered] = useState(false);
-  const [inProp, setInProp] = useState(false);
 
   const {
     hovered, onMouseEnter, onFocus, onMouseLeave, onBlur,
   } = useHover();
-  useEffect(() => {
-    console.log('hovered', hovered);
-    setInProp(hovered);
-    console.log('inProp', inProp);
-  }, [hovered]);
 
   let labelCard;
   let amountCard;
