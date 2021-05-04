@@ -5,8 +5,8 @@ import {
 } from 'react-router-dom';
 import AuthContext from '../contexts/auth.context';
 import AuthPage from '../pages/AuthPage';
-import DashboardPage from '../pages/DashboardPage';
 import HomePage from '../pages/HomePage';
+import DashboardRouter from './DashboardRouter';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -27,7 +27,7 @@ const AppRouter = () => {
             <PrivateRoute
               path="/dashboard"
               isAuthenticated={!!user.token}
-              component={DashboardPage}
+              component={DashboardRouter}
             />
             <PublicRoute
               path="/"
