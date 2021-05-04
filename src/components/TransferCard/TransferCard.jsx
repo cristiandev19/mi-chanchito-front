@@ -4,6 +4,7 @@ import { Button, Divider, makeStyles } from '@material-ui/core';
 import { cashFlowLabels, eventsTransferCard } from '../../constant/transfer';
 import useHover from '../../hooks/hoover.hook';
 import './TransferCard.css';
+import { formatDate } from '../../lib/date';
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -11,14 +12,9 @@ const useStyles = makeStyles(() => ({
     margin  : '20px 0',
   },
   actionsBtn: {
-    display        : 'flex',
-    justifyContent : 'center',
-    transition     : 'transform 200ms ease',
-  },
-  hidden: {
-    opacity : 0,
-    height  : 0,
-    display : 'none',
+    display    : 'flex',
+    alignItems : 'center',
+    transition : 'transform 200ms ease',
   },
 }));
 
@@ -32,6 +28,7 @@ const TransferCard = ({
   const {
     hovered, onMouseEnter, onFocus, onMouseLeave, onBlur,
   } = useHover();
+  console.log('hovered', hovered);
 
   let labelCard;
   let amountCard;
@@ -84,21 +81,25 @@ const TransferCard = ({
           labelCard
         }
       </div>
-      <Divider className={hovered ? '' : classes.hidden} />
-      <div className={hovered ? classes.actionsBtn : classes.hidden}>
-        <Button
-          onClick={emitDelete}
-          color="primary"
-          autoFocus
-        >
-          Eliminar
-        </Button>
+      <Divider />
+      <div className={classes.actionsBtn}>
+        <div>
+          { formatDate(transfer.dateTransfer) }
+        </div>
+        <span className="spacer" />
         <Button
           onClick={emitUpdate}
           color="primary"
           autoFocus
         >
           Actualizar
+        </Button>
+        <Button
+          onClick={emitDelete}
+          color="primary"
+          autoFocus
+        >
+          Eliminar
         </Button>
       </div>
     </div>
