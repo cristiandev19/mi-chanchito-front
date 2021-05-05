@@ -83,7 +83,7 @@ const LoginModal = ({ onClose, open }) => {
     console.log('response', loginPayload);
     console.log('dispatch', dispatch);
     authService.setLocalStorage(loginPayload);
-    history.push('/dashboard');
+    history.push('/dashboard/home');
   };
 
   const onSubmit = (data) => {
