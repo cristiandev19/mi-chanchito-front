@@ -151,32 +151,27 @@ const DashboardHomePage = () => {
   return (
     <div>
 
-      <div className="container">
+      <BalanceCard data={dataTransfers} />
 
-        <h1>Balance</h1>
-
-        <BalanceCard data={dataTransfers} />
-
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.addBtn}
-          onClick={handleAddTransfer}
-        >
-          Agregar
-        </Button>
-        {/* cards */}
-        {
-          dataTransfers.map((transfer) => (
-            <TransferCard
-              // eslint-disable-next-line no-underscore-dangle
-              key={transfer._id}
-              transfer={transfer}
-              transferCardEvent={handleTransferCardEvent}
-            />
-          ))
-        }
-      </div>
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.addBtn}
+        onClick={handleAddTransfer}
+      >
+        Agregar
+      </Button>
+      {/* cards */}
+      {
+        dataTransfers.map((transfer) => (
+          <TransferCard
+            // eslint-disable-next-line no-underscore-dangle
+            key={transfer._id}
+            transfer={transfer}
+            transferCardEvent={handleTransferCardEvent}
+          />
+        ))
+      }
       <TransferModal
         open={openTransferDialog}
         actionTransfer={actionTransfer}
