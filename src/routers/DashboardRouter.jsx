@@ -1,5 +1,5 @@
 import {
-  AppBar, IconButton, List, ListItem, ListItemIcon,
+  AppBar, Container, IconButton, List, ListItem, ListItemIcon,
   ListItemText, makeStyles, Menu, MenuItem, SwipeableDrawer,
   Toolbar, Typography,
 } from '@material-ui/core';
@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Route, Switch, useRouteMatch } from 'react-router';
 import DashboardHomePage from '../pages/DashboardHomePage';
 import ProfilePage from '../pages/ProfilePage';
+import DashboardGeneralBalancePage from '../pages/DashboardGeneralBalancePage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+  },
+  container: {
+    backgroundColor: '#f5f5f5',
   },
 }));
 
@@ -135,18 +139,33 @@ const DashboardRouter = () => {
               </ListItemIcon>
               <ListItemText primary="Inicio" />
             </ListItem>
+            <ListItem button component={Link} to={`${url}/general-balance`}>
+              <ListItemIcon>
+                <MenuIcon />
+              </ListItemIcon>
+              <ListItemText primary="Balance general" />
+            </ListItem>
           </List>
         </div>
       </SwipeableDrawer>
 
-      <Switch>
-        <Route exact path={`${path}/home`}>
-          <DashboardHomePage />
-        </Route>
-        <Route path={`${path}/perfil`}>
-          <ProfilePage />
-        </Route>
-      </Switch>
+      <div className={classes.container}>
+        <Container fixed maxWidth="md">
+          <Switch>
+            <Route exact path={`${path}/home`}>
+              <DashboardHomePage />
+            </Route>
+            <Route path={`${path}/perfil`}>
+              <ProfilePage />
+            </Route>
+            <Route path={`${path}/general-balance`}>
+              <DashboardGeneralBalancePage />
+            </Route>
+
+          </Switch>
+        </Container>
+
+      </div>
     </>
   );
 };
