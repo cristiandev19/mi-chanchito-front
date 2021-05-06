@@ -63,7 +63,6 @@ const DashboardRouter = () => {
     setAnchorEl(null);
   };
 
-  console.log('ghkla', url);
   return (
     <>
       <AppBar position="static">
