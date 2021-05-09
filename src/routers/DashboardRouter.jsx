@@ -12,6 +12,7 @@ import { Route, Switch, useRouteMatch } from 'react-router';
 import DashboardHomePage from '../pages/DashboardHomePage';
 import ProfilePage from '../pages/ProfilePage';
 import DashboardGeneralBalancePage from '../pages/DashboardGeneralBalancePage';
+import DashboardCreditPage from '../pages/DashboardCreditPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -144,6 +145,12 @@ const DashboardRouter = () => {
               </ListItemIcon>
               <ListItemText primary="Balance general" />
             </ListItem>
+            <ListItem button component={Link} to={`${url}/credit`}>
+              <ListItemIcon>
+                <MenuIcon />
+              </ListItemIcon>
+              <ListItemText primary="Credito" />
+            </ListItem>
           </List>
         </div>
       </SwipeableDrawer>
@@ -160,7 +167,13 @@ const DashboardRouter = () => {
             <Route path={`${path}/general-balance`}>
               <DashboardGeneralBalancePage />
             </Route>
+            <Route path={`${path}/credit`}>
+              <DashboardCreditPage />
+            </Route>
 
+            <Route path="*">
+              <DashboardHomePage />
+            </Route>
           </Switch>
         </Container>
 
