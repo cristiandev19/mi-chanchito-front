@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Divider, makeStyles } from '@material-ui/core';
 import { cashFlowLabels, eventsTransferCard } from '../../constant/transfer';
-import useHover from '../../hooks/hoover.hook';
+// import useHover from '../../hooks/hoover.hook';
 import './TransferCard.css';
 import { formatDate } from '../../lib/date';
 
@@ -25,10 +25,10 @@ const TransferCard = ({
   const classes = useStyles();
   // const [hovered, setHovered] = useState(false);
 
-  const {
-    hovered, onMouseEnter, onFocus, onMouseLeave, onBlur,
-  } = useHover();
-  console.log('hovered', hovered);
+  // const {
+  //   hovered, onMouseEnter, onFocus, onMouseLeave, onBlur,
+  // } = useHover();
+  // console.log('hovered', hovered);
 
   let labelCard;
   let amountCard;
@@ -62,12 +62,15 @@ const TransferCard = ({
 
   return (
 
+    // <div
+    //   className="card transfer-card"
+    //   onMouseEnter={onMouseEnter}
+    //   onFocus={onFocus}
+    //   onMouseLeave={onMouseLeave}
+    //   onBlur={onBlur}
+    // >
     <div
       className="card transfer-card"
-      onMouseEnter={onMouseEnter}
-      onFocus={onFocus}
-      onMouseLeave={onMouseLeave}
-      onBlur={onBlur}
     >
       <div className={classes.header}>
         <div>
