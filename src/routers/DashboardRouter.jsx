@@ -131,12 +131,6 @@ const DashboardRouter = () => {
               <ListItemIcon>
                 <MenuIcon />
               </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItem>
-            <ListItem button onClick={toggleDrawer(false)}>
-              <ListItemIcon>
-                <MenuIcon />
-              </ListItemIcon>
               <ListItemText primary="Inicio" />
             </ListItem>
             <ListItem button component={Link} to={`${url}/general-balance`}>
