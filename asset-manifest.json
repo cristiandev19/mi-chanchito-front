@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/mi-chanchito-front/static/css/main.dc2d0e71.chunk.css",
-    "main.js": "/mi-chanchito-front/static/js/main.03f31e60.chunk.js",
-    "main.js.map": "/mi-chanchito-front/static/js/main.03f31e60.chunk.js.map",
+    "main.js": "/mi-chanchito-front/static/js/main.36a5c30b.chunk.js",
+    "main.js.map": "/mi-chanchito-front/static/js/main.36a5c30b.chunk.js.map",
     "runtime-main.js": "/mi-chanchito-front/static/js/runtime-main.3cb31fe3.js",
     "runtime-main.js.map": "/mi-chanchito-front/static/js/runtime-main.3cb31fe3.js.map",
     "static/js/2.f7202ee0.chunk.js": "/mi-chanchito-front/static/js/2.f7202ee0.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.3cb31fe3.js",
     "static/js/2.f7202ee0.chunk.js",
     "static/css/main.dc2d0e71.chunk.css",
-    "static/js/main.03f31e60.chunk.js"
+    "static/js/main.36a5c30b.chunk.js"
   ]
 }
