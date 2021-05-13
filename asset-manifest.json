@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/mi-chanchito-front/static/css/main.dc2d0e71.chunk.css",
+    "main.js": "/mi-chanchito-front/static/js/main.03f31e60.chunk.js",
+    "main.js.map": "/mi-chanchito-front/static/js/main.03f31e60.chunk.js.map",
+    "runtime-main.js": "/mi-chanchito-front/static/js/runtime-main.3cb31fe3.js",
+    "runtime-main.js.map": "/mi-chanchito-front/static/js/runtime-main.3cb31fe3.js.map",
+    "static/js/2.f7202ee0.chunk.js": "/mi-chanchito-front/static/js/2.f7202ee0.chunk.js",
+    "static/js/2.f7202ee0.chunk.js.map": "/mi-chanchito-front/static/js/2.f7202ee0.chunk.js.map",
+    "static/js/3.4100f594.chunk.js": "/mi-chanchito-front/static/js/3.4100f594.chunk.js",
+    "static/js/3.4100f594.chunk.js.map": "/mi-chanchito-front/static/js/3.4100f594.chunk.js.map",
+    "index.html": "/mi-chanchito-front/index.html",
+    "static/css/main.dc2d0e71.chunk.css.map": "/mi-chanchito-front/static/css/main.dc2d0e71.chunk.css.map",
+    "static/js/2.f7202ee0.chunk.js.LICENSE.txt": "/mi-chanchito-front/static/js/2.f7202ee0.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3cb31fe3.js",
+    "static/js/2.f7202ee0.chunk.js",
+    "static/css/main.dc2d0e71.chunk.css",
+    "static/js/main.03f31e60.chunk.js"
+  ]
+}
