@@ -1,5 +1,5 @@
 const prodConfig = {
-  apiUrl: 'http://localhost:8089',
+  apiUrl: 'https://mi-chanchito-back.herokuapp.com/',
 };
 
 export default prodConfig;
